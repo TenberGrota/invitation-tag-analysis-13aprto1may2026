@@ -3,1119 +3,725 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitation-related ticket analysis comparison: March vs April-May 2026</title>
-    <!-- Tailwind CSS for modern layout --> 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Comparative invitation-related ticket analysis - 11-30 March 2026</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        /* Modern, elegant reset & variable definitions */
+        :root {
+            --primary: #002358;       /* Prussian Navy (Covidence Dark Blue) */
+            --accent-teal: #43B09A;   /* Covidence Teal */
+            --accent-peach: #EFC89B;  /* Covidence Peach */
+            --bg-light: #F1F5F9;       /* Light Slate background for distinct card contrast */
+            --bg-card: #FFFFFF;
+            --border-color: #E2E8F0;
+            --text-main: #334155;     /* Slate-700 for highly readable copy */
+            --text-dark: #0F172A;     /* Slate-900 */
+            --text-muted: #64748B;    /* Slate-500 */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            color: #24292f;
-            background-color: #f6f8fa;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 60px 20px;
+            -webkit-font-smoothing: antialiased;
         }
-        code, pre {
-            font-family: 'JetBrains Mono', monospace;
+
+        /* Wrapper for layout flow */
+        .report-wrapper {
+            max-width: 860px;
+            margin: 0 auto;
         }
-        .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+
+        /* Base card styling for individual section separation */
+        .report-card {
+            background: var(--bg-card);
+            padding: 40px 50px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 35, 88, 0.06);
+            box-shadow: 0 4px 20px rgba(0, 35, 88, 0.02);
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        /* Header typography matching the GitHub AdHoc design */
+        .header {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid var(--primary);
+            max-width: 75%;
+        }
+
+        h1 {
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.02em;
+            line-height: 1.25;
+            margin-bottom: 12px;
+        }
+
+        .meta-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .meta-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .meta-text strong {
+            color: var(--primary);
             font-weight: 600;
-            color: #1f2328;
         }
-        .badge-sig {
-            background-color: #dafbe1;
-            color: #1a7f37;
-            border: 1px solid rgba(26,127,55,0.2);
+
+        .meta-link {
+            color: var(--primary);
+            text-decoration: underline;
+            font-weight: 600;
+            transition: color 0.2s ease;
         }
-        .badge-insig {
-            background-color: #fff8c5;
-            color: #9a6700;
-            border: 1px solid rgba(154,103,0,0.2);
+
+        .meta-link:hover {
+            color: var(--accent-teal);
         }
-        .badge-neutral {
-            background-color: #eaeef2;
-            color: #57606a;
-            border: 1px solid rgba(87,96,106,0.2);
+
+        /* Layout Headings inside cards */
+        h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 0px;
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-desc {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 24px;
+            max-width: 95%;
+        }
+
+        /* Stats Grid styling */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 580px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            background: #FDFEFE;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px 24px;
+            transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 35, 88, 0.05);
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 4px;
+            letter-spacing: -0.03em;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .stat-subtext {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Clean, high-impact distribution grid layout */
+        .distribution-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            width: 100%;
+        }
+
+        .distribution-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background-color: #FAFAFB;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .distribution-item:hover {
+            border-color: var(--accent-teal);
+            background-color: #F8FAFC;
+        }
+
+        .distribution-item .color-key {
+            margin-top: 6px;
+            flex-shrink: 0;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 35, 88, 0.15); /* Keep light colors visible */
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .item-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            line-height: 1.4;
+            min-height: 40px; /* Aligns grid items visually */
+        }
+
+        /* Visual Comparison Bar Element Styling */
+        .comparison-visual-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 4px;
+            width: 100%;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .bar-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            width: 110px;
+            flex-shrink: 0;
+        }
+
+        .bar-track {
+            background-color: #E2E8F0;
+            height: 8px;
+            border-radius: 4px;
+            flex-grow: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Primary color override for selected issue names */
+        .highlight-primary {
+            color: var(--primary) !important;
+        }
+
+        /* Highlight color override */
+        .highlight-accent {
+            color: #A7007E !important;
+        }
+
+        /* Elegant, minimal tables (GitHub standard for comparison card) */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            background-color: #FFFFFF;
+        }
+
+        th {
+            background-color: #FAFAFB;
+            color: var(--primary);
+            font-weight: 700;
+            text-align: left;
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            letter-spacing: 0.01em;
+        }
+
+        td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #F1F5F9;
+            color: var(--text-main);
+            vertical-align: top;
+            line-height: 1.5;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: #F8FAFC;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .nowrap {
+            white-space: nowrap;
+        }
+
+        /* Modern, subtle status pills */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .badge-highly {
+            background-color: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .badge-significant {
+            background-color: #FEF3C7;
+            color: #92400E;
+        }
+
+        .badge-not {
+            background-color: #F1F5F9;
+            color: #475569;
+        }
+
+        /* Other Insights - structured grid for side-by-side cards */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .insight-subcard {
+            background-color: #FAFAFB;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .insight-subcard:hover {
+            border-color: var(--accent-teal);
+            background-color: #F8FAFC;
+            transform: translateY(-2px);
+        }
+
+        .insight-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .insight-num {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            background-color: var(--primary);
+            color: #FFFFFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        /* Custom numbering accents */
+        .insight-subcard:nth-child(2) .insight-num {
+            background-color: var(--accent-teal);
+        }
+
+        .insight-subcard:nth-child(3) .insight-num {
+            background-color: var(--accent-peach);
+            color: var(--primary);
+        }
+
+        .insight-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            letter-spacing: -0.01em;
+        }
+
+        .insight-body {
+            font-size: 0.92rem;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Elegant Footer marker matching the end of target report */
+        .report-footer {
+            margin-top: 40px;
+            padding-bottom: 40px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 820px) {
+            body {
+                padding: 30px 10px;
+            }
+            .report-card {
+                padding: 30px 24px;
+            }
+            .distribution-list {
+                grid-template-columns: 1fr;
+            }
+            .insights-grid {
+                grid-template-columns: 1fr; /* Stack vertically on small screens */
+            }
+            .header {
+                max-width: 100%;
+                margin-bottom: 28px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .insight-header {
+                gap: 10px;
+            }
+            .insight-num {
+                width: 26px;
+                height: 26px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
-<body class="min-h-screen pb-16">
+<body>
 
-    <!-- Header bar styled exactly like modern minimalist doc pages -->
-    <header class="border-b border-gray-200 bg-white sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-md bg-slate-800 flex items-center justify-center text-white font-bold text-sm">C</div>
-                <div>
-                    <span class="font-semibold text-gray-900 block text-sm leading-tight">Covidence Support Intelligence</span>
-                    <span class="text-xs text-gray-500">AdHoc Reports Hub</span>
-                </div>
-            </div>
-            <div class="flex items-center space-x-4">
-                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
-                    <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-red-600 animate-pulse"></span>Confidential
-                </span>
-                <a href="https://tenbergrota.github.io/AdHocReports/" target="_blank" class="text-xs text-blue-600 hover:underline flex items-center">
-                    Original Report <i data-lucide="external-link" class="w-3 h-3 ml-1"></i>
-                </a>
+<div class="report-wrapper">
+
+    <!-- OVERVIEW CARD (Header & Metrics) -->
+    <div class="report-card">
+        <div class="header">
+            <h1>Invitation-related ticket analysis</h1>
+            <div class="meta-container">
+                <p class="meta-text"><strong>Reporting period:</strong> 13 April – 1 May 2026</p>
+                <p class="meta-text"><strong>Comparison context:</strong> <a href="https://tenbergrota.github.io/AdHocReports/" target="_blank" class="meta-link">11-30 March 2026</a> vs. April–May 2026</p>
             </div>
         </div>
-    </header>
 
-    <main class="max-w-5xl mx-auto px-4 mt-8">
-        <!-- Main Document Wrapper mimicking github pages layout -->
-        <article class="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden p-6 md:p-10 markdown-body">
+        <div class="stats-grid">
+            <!-- 609 card styled with translucent #3E5AD8, label inherits color, number is #002358 -->
+            <div class="stat-card" style="background-color: rgba(62, 90, 216, 0.08); border-color: rgba(62, 90, 216, 0.25);">
+                <div class="stat-label" style="color: #3E5AD8;">Relevant tickets</div>
+                <div class="stat-value" style="color: #002358;">609</div>
+            </div>
+            <!-- 79 card styled with translucent #A7007E, label inherits color, number is #002358 -->
+            <div class="stat-card" style="background-color: rgba(167, 0, 126, 0.08); border-color: rgba(167, 0, 126, 0.25);">
+                <div class="stat-label" style="color: #A7007E;">Invitation related</div>
+                <div class="stat-value" style="color: #002358;">79</div>
+                <div class="stat-subtext">13.0% of relevant tickets</div>
+            </div>
+            <!-- 89.9% card styled with translucent #0E8570, label inherits color, number is #002358 -->
+            <div class="stat-card" style="background-color: rgba(14, 133, 112, 0.08); border-color: rgba(14, 133, 112, 0.25);">
+                <div class="stat-label" style="color: #0E8570;">Invitation issue-tagged</div>
+                <div class="stat-value" style="color: #002358;">89.9%</div>
+                <div class="stat-subtext">71 tagged / 8 untagged</div>
+            </div>
+            <!-- 44.3% card styled with translucent #D04457, label inherits color, number is #002358 -->
+            <div class="stat-card" style="background-color: rgba(208, 68, 87, 0.08); border-color: rgba(208, 68, 87, 0.25);">
+                <div class="stat-label" style="color: #D04457;">Pain point-tagged</div>
+                <div class="stat-value" style="color: #002358;">44.3%</div>
+                <div class="stat-subtext">35 tagged / 44 untagged</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CARD 1: ISSUE DISTRIBUTION -->
+    <div class="report-card">
+        <h2>Issue distribution</h2>
+        
+        <div class="distribution-list">
             
-            <!-- Breadcrumb & Metadata -->
-            <div class="text-xs text-gray-500 mb-2 flex items-center space-x-1.5">
-                <span>AdHocReports</span>
-                <span>/</span>
-                <span class="text-gray-800 font-medium">Invitation tickets comparison</span>
-            </div>
-            
-            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">
-                Comparative Invitation-Related Ticket Analysis
-            </h1>
-            <p class="text-gray-500 text-base mb-6 border-b border-gray-100 pb-6">
-                Evaluating product outcomes from March vs. late April–May 2026. This analysis tracks key user journey metrics following the March 10th bug fixes and identifies operational tagging discrepancies.
-            </p>
-
-            <!-- Quick Summary Dashboard Cards -->
-            <h2 class="text-lg font-bold mb-4 flex items-center">
-                <i data-lucide="trending-down" class="w-5 h-5 mr-2 text-indigo-600"></i> Performance Shifts at a Glance
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <!-- Card 1 -->
-                <div class="bg-gradient-to-br from-emerald-50 to-white p-4 rounded-lg border border-emerald-100 relative overflow-hidden">
-                    <span class="text-xs font-semibold text-emerald-800 uppercase tracking-wider block">Premature B2B Link Expiry (Code A)</span>
-                    <div class="flex items-baseline mt-2 space-x-2">
-                        <span class="text-3xl font-bold text-gray-900">1.3%</span>
-                        <span class="text-xs font-medium text-emerald-600 flex items-center">
-                            <i data-lucide="arrow-down-left" class="w-3.5 h-3.5 mr-0.5"></i> -92.4% vs March
-                        </span>
-                    </div>
-                    <span class="text-[11px] text-emerald-700 block mt-1 font-medium">Highly Significant Product Resolution</span>
-                    <div class="absolute right-2 bottom-2 opacity-10 text-emerald-600">
-                        <i data-lucide="check-circle-2" class="w-12 h-12"></i>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="bg-gradient-to-br from-blue-50 to-white p-4 rounded-lg border border-blue-100 relative overflow-hidden">
-                    <span class="text-xs font-semibold text-blue-800 uppercase tracking-wider block">B2B Trial vs License Confusion (Code E)</span>
-                    <div class="flex items-baseline mt-2 space-x-2">
-                        <span class="text-3xl font-bold text-gray-900">5.1%</span>
-                        <span class="text-xs font-medium text-blue-600 flex items-center">
-                            <i data-lucide="arrow-down-left" class="w-3.5 h-3.5 mr-0.5"></i> -75.0% vs March
-                        </span>
-                    </div>
-                    <span class="text-[11px] text-blue-700 block mt-1 font-medium">Highly Significant Friction Decrease</span>
-                    <div class="absolute right-2 bottom-2 opacity-10 text-blue-600">
-                        <i data-lucide="users" class="w-12 h-12"></i>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="bg-gradient-to-br from-amber-50 to-white p-4 rounded-lg border border-amber-100 relative overflow-hidden">
-                    <span class="text-xs font-semibold text-amber-800 uppercase tracking-wider block">Data Noise (Category H + I)</span>
-                    <div class="flex items-baseline mt-2 space-x-2">
-                        <span class="text-3xl font-bold text-gray-900">58.2%</span>
-                        <span class="text-xs font-medium text-amber-600 flex items-center">
-                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mr-0.5"></i> New Insight
-                        </span>
-                    </div>
-                    <span class="text-[11px] text-amber-700 block mt-1 font-medium">Mis-tagging and Successful Onboarding</span>
-                    <div class="absolute right-2 bottom-2 opacity-10 text-amber-600">
-                        <i data-lucide="alert-triangle" class="w-12 h-12"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contextual Commentary -->
-            <div class="bg-slate-50 border border-slate-200 rounded-lg p-5 mb-8">
-                <h3 class="font-semibold text-gray-900 text-sm mb-2 flex items-center">
-                    <i data-lucide="info" class="w-4 h-4 mr-1.5 text-slate-600"></i> Key Analyst Context
-                </h3>
-                <p class="text-xs text-gray-600 leading-relaxed">
-                    Following the <strong>March 10 bug fixes</strong>, the primary technical blockers—specifically <strong>premature link expirations (Code A)</strong> and <strong>B2B active member trial account confusion (Code E)</strong>—have plummeted. However, as actual system failures have reached near-zero, a major discovery in the April–May dataset is that <strong>58.2%</strong> of current ticket volume categorized under "Invitation Issues" is actually composed of mis-tagged operational logs (Code H) or standard successful user linkage events (Code I).
-                </p>
-            </div>
-
-            <!-- Deep Dive Statistical Table -->
-            <h2 class="text-xl font-bold mb-4 flex items-center border-b border-gray-100 pb-2">
-                <i data-lucide="bar-chart-3" class="w-5 h-5 mr-2 text-indigo-600"></i> Side-by-Side Statistical Comparison
-            </h2>
-            <p class="text-xs text-gray-500 mb-4">
-                Analysis computed using <strong>Fisher's Exact Test</strong> comparing March data ($N = 93$) against late April–May data ($N = 79$).
-            </p>
-
-            <div class="overflow-x-auto border border-gray-200 rounded-lg mb-8">
-                <table class="min-w-full divide-y divide-gray-200 text-sm">
-                    <thead class="bg-gray-50 text-gray-700 font-medium">
-                        <tr>
-                            <th scope="col" class="px-4 py-3 text-left font-semibold">Category Code & Description</th>
-                            <th scope="col" class="px-3 py-3 text-center font-semibold">March Share (%)</th>
-                            <th scope="col" class="px-3 py-3 text-center font-semibold">April–May Share (%)</th>
-                            <th scope="col" class="px-3 py-3 text-center font-semibold">Fisher's p-value</th>
-                            <th scope="col" class="px-4 py-3 text-right font-semibold">Significance Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 text-gray-600 bg-white">
-                        <!-- Code A -->
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="px-4 py-3 font-medium text-gray-900">
-                                <span class="inline-block w-5 h-5 bg-indigo-50 text-indigo-600 text-xs font-bold rounded text-center mr-2">A</span>
-                                B2B invitation link expired prematurely
-                            </td>
-                            <td class="px-3 py-3 text-center">17.2% <span class="text-xs text-gray-400 block">(16)</span></td>
-                            <td class="px-3 py-3 text-center font-medium text-emerald-600">1.3% <span class="text-xs text-gray-400 block">(1)</span></td>
-                            <td class="px-3 py-3 text-center text-xs">p = 0.00046</td>
-                            <td class="px-4 py-3 text-right">
-                                <span class="inline-block px-2.5 py-1 text-xs font-medium rounded-full badge-sig">Highly Significant (Drop)</span>
-                            </td>
-                        </tr>
-                        <!-- Code B -->
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="px-4 py-3 font-medium text-gray-900">
-                                <span class="inline-block w-5 h-5 bg-indigo-50 text-indigo-600 text-xs font-bold rounded text-center mr-2">B</span>
-                                B2B invitation not received
-                            </td>
-                            <td class="px-3 py-3 text-center">12.9% <span class="text-xs text-gray-400 block">(12)</span></td>
-                            <td class="px-3 py-3 text-center font-medium text-emerald-600">2.5% <span class="text-xs text-gray-400 block">(2)</span></td>
-                            <td class="px-3 py-3 text-center text-xs">p = 0.02211</td>
-                            <td class="px-4 py-3 text-right">
-                                <span class="inline-block px-2.5 py-1 text-xs font-medium rounded-full badge-sig">Significant (Drop)</span>
-                            </td>
-                        </tr>
-                        <!-- Code C -->
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="px-4 py-3 font-medium text-gray-900">
-                                <span class="inline-block w-5 h-5 bg-indigo-50 text-indigo-600 text-xs font-bold rounded text-center mr-2">C</span>
-                                Request B2B link resend (unclear cause)
-                            </td>
-                            <td class="px-3 py-3 text-center">9.7% <span class="text-xs text-gray-400 block">(9)</span></td>
-                            <td class="px-3 py-3 text-center">8.9% <span class="text-xs text-gray-400 block">(7)</span></td>
-                            <td class="px-3 py-3 text-center text-xs">p = 1.00000</td>
-                            <td class="px-4 py-3 text-right">
-                                <span class="inline-block px-2.5 py-1 text-xs font-medium rounded-full badge-insig">Not Significant (Stable)</span>
-                            </td>
-                        </tr>
-                        <!-- Code D -->
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="px-4 py-3 font-medium text-gray-900">
-                                <span class="inline-block w-5 h-5 bg-indigo-50 text-indigo-600 text-xs font-bold rounded text-center mr-2">D</span>
-                                Review invitation link expired prematurely
-                            </td>
-                            <td class="px-3 py-3 text-center">5.4% <span class="text-xs text-gray-400 block">(5)</span></td>
-                            <td class="px-3 py-3 text-center">1.3% <span class="text-xs text-gray-400 block">(1)</span></td>
-                            <td class="px-3 py-3 text-center text-xs">p = 0.21994</td>
-                            <td class="px-4 py-3 text-right">
-                                <span class="inline-block px-2.5 py-1 text-xs font-medium rounded-full badge-insig">Not Significant (Low N)</span>
-                            </td>
-                        </tr>
-                        <!-- Code E -->
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="px-4 py-3 font-medium text-gray-900">
-                                <span class="inline-block w-5 h-5 bg-indigo-50 text-indigo-600 text-xs font-bold rounded text-center mr-2">E</span>
-                                B2B active member trial/license confusion
-                            </td>
-                            <td class="px-3 py-3 text-center">20.4% <span class="text-xs text-gray-400 block">(19)</span></td>
-                            <td class="px-3 py-3 text-center font-medium text-emerald-600">5.1% <span class="text-xs text-gray-400 block">(4)</span></td>
-                            <td class="px-3 py-3 text-center text-xs">p = 0.00323</td>
-                            <td class="px-4 py-3 text-right">
-                                <span class="inline-block px-2.5 py-1 text-xs font-medium rounded-full badge-sig">Highly Significant (Drop)</span>
-                            </td>
-                        </tr>
-                        <!-- Operational Noise: Code H & I -->
-                        <tr class="hover:bg-slate-50 transition bg-amber-50/20">
-                            <td class="px-4 py-3 font-medium text-amber-950">
-                                <span class="inline-block w-5 h-5 bg-amber-100 text-amber-700 text-xs font-bold rounded text-center mr-2">H</span>
-                                Incorrectly tagged with Invitation Issue
-                            </td>
-                            <td class="px-3 py-3 text-center text-gray-400">24.7% <span class="text-xs text-gray-400 block">(23)</span></td>
-                            <td class="px-3 py-3 text-center font-semibold text-amber-700">30.4% <span class="text-xs text-gray-400 block">(24)</span></td>
-                            <td class="px-3 py-3 text-center text-xs">p = 0.49021</td>
-                            <td class="px-4 py-3 text-right">
-                                <span class="inline-block px-2.5 py-1 text-xs font-medium rounded-full badge-neutral">Operational Overhead</span>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-slate-50 transition bg-amber-50/20">
-                            <td class="px-4 py-3 font-medium text-amber-950">
-                                <span class="inline-block w-5 h-5 bg-amber-100 text-amber-700 text-xs font-bold rounded text-center mr-2">I</span>
-                                Successful onboarding / Linkage created
-                            </td>
-                            <td class="px-3 py-3 text-center text-gray-400">9.7% <span class="text-xs text-gray-400 block">(9)</span></td>
-                            <td class="px-3 py-3 text-center font-semibold text-amber-700">27.8% <span class="text-xs text-gray-400 block">(22)</span></td>
-                            <td class="px-3 py-3 text-center text-xs">p = 0.00412</td>
-                            <td class="px-4 py-3 text-right">
-                                <span class="inline-block px-2.5 py-1 text-xs font-medium rounded-full badge-sig">Significant (Increase)</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Visualization / Comparison Bar Charts -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                <div class="border border-gray-200 rounded-lg p-5">
-                    <h4 class="font-bold text-gray-800 text-sm mb-4 flex items-center justify-between">
-                        <span>Severe Core Customer Friction Points</span>
-                        <span class="text-xs text-gray-400 font-normal">Pre/Post comparison</span>
-                    </h4>
-                    <!-- Custom Pure Tailwind Chart for Category A -->
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between text-xs mb-1">
-                                <span class="text-gray-600">A - Premature B2B Link Expiration</span>
-                                <span class="font-semibold text-gray-800">17.2% vs 1.3%</span>
-                            </div>
-                            <div class="space-y-1">
-                                <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
-                                    <div class="bg-gray-400 h-full rounded-full" style="width: 17.2%"></div>
-                                </div>
-                                <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
-                                    <div class="bg-emerald-500 h-full rounded-full" style="width: 1.3%"></div>
-                                </div>
-                            </div>
+            <div class="distribution-item">
+                <span class="color-key" style="background-color: #002358;"></span>
+                <div class="item-details">
+                    <div class="item-name highlight-primary">B2B invitation link expired prematurely</div>
+                    <div class="comparison-visual-container">
+                        <div class="bar-row">
+                            <span class="bar-label" style="color: #002358;">April–May: 1.3%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 1.3%; background-color: #002358;"></div></div>
                         </div>
-                        <!-- Cat E -->
-                        <div>
-                            <div class="flex justify-between text-xs mb-1">
-                                <span class="text-gray-600">E - Trial Account Confusion</span>
-                                <span class="font-semibold text-gray-800">20.4% vs 5.1%</span>
-                            </div>
-                            <div class="space-y-1">
-                                <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
-                                    <div class="bg-gray-400 h-full rounded-full" style="width: 20.4%"></div>
-                                </div>
-                                <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
-                                    <div class="bg-emerald-500 h-full rounded-full" style="width: 5.1%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Cat B -->
-                        <div>
-                            <div class="flex justify-between text-xs mb-1">
-                                <span class="text-gray-600">B - B2B Invitation Not Received</span>
-                                <span class="font-semibold text-gray-800">12.9% vs 2.5%</span>
-                            </div>
-                            <div class="space-y-1">
-                                <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
-                                    <div class="bg-gray-400 h-full rounded-full" style="width: 12.9%"></div>
-                                </div>
-                                <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
-                                    <div class="bg-emerald-500 h-full rounded-full" style="width: 2.5%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-4 mt-4 pt-4 border-t border-gray-100 text-[11px] text-gray-500">
-                        <span class="flex items-center"><span class="w-2.5 h-2.5 bg-gray-400 rounded-full mr-1.5 inline-block"></span>March period</span>
-                        <span class="flex items-center"><span class="w-2.5 h-2.5 bg-emerald-500 rounded-full mr-1.5 inline-block"></span>April–May period</span>
-                    </div>
-                </div>
-
-                <!-- Tag Quality Chart -->
-                <div class="border border-gray-200 rounded-lg p-5">
-                    <h4 class="font-bold text-gray-800 text-sm mb-4">Current Composition of "Invitation Issue" Queue (April–May)</h4>
-                    <div class="space-y-3.5">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-gray-600">Core Software Failures / Confusion (A, B, D, E)</span>
-                            <span class="font-bold text-gray-800">10.1%</span>
-                        </div>
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-gray-600">Ambiguous Actions / Support Resends (C, G, J, K, M, N)</span>
-                            <span class="font-bold text-gray-800">31.6%</span>
-                        </div>
-                        <div class="flex justify-between items-center text-xs text-amber-700">
-                            <span>Tagging Errors & Mis-categorized Logs (H)</span>
-                            <span class="font-bold">30.4%</span>
-                        </div>
-                        <div class="flex justify-between items-center text-xs text-indigo-700">
-                            <span>Standard Successful Linkages (I)</span>
-                            <span class="font-bold">27.8%</span>
-                        </div>
-                        
-                        <div class="h-6 w-full flex rounded-full overflow-hidden mt-4 text-[10px] text-white font-semibold text-center leading-6">
-                            <div class="bg-rose-500" style="width: 10.1%" title="Failures">10%</div>
-                            <div class="bg-gray-400" style="width: 31.6%" title="Resends">32%</div>
-                            <div class="bg-amber-500" style="width: 30.4%" title="Mis-tagged">30%</div>
-                            <div class="bg-indigo-500" style="width: 27.8%" title="Successful Linkage">28%</div>
+                        <div class="bar-row">
+                            <span class="bar-label">March: 17.2%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 17.2%; background-color: #94A3B8;"></div></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Metadata / Quality Commentary -->
-            <div class="border-t border-gray-200 pt-8 mb-8">
-                <h3 class="text-xl font-bold mb-4 flex items-center text-slate-800">
-                    <i data-lucide="tag" class="w-5 h-5 mr-2 text-indigo-600"></i> Metadata Tagging & Accuracy Review
-                </h3>
-                <div class="space-y-4 text-sm text-gray-600 leading-relaxed">
-                    <p>
-                        In March, the support team struggled with <strong>Ineffective Pain Point Tagging</strong> ($50.5\%$ accuracy) and misclassified "Other" issues ($71.9\%$ noise rate). Unfortunately, the latest dataset shows the team still relies heavily on ineffective practices:
-                    </p>
-                    <ul class="list-disc pl-5 space-y-2 text-xs">
-                        <li><strong>Pain Point Tag Coin-Flip (44.3%):</strong> The rate of tagging is statistically identical to March ($p \approx 0.446$). Actual pain-point identification remains functionally arbitrary.</li>
-                        <li><strong>Standard Operational Onboarding as Ticket Overhead:</strong> Over $27.8\%$ of tickets analyzed in April-May represent standard onboarding successes (Code I). These are not failures, yet they consume significant tag space.</li>
-                        <li><strong>A Call to Action for Support Operations:</strong> Support Managers should train agents to restrict the <code>Invitation Issue</code> tag only to genuine software blockages, routing normal setups and SSO account confusion differently.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Dynamic Ticket Explorer Section -->
-            <div class="border-t border-gray-200 pt-8">
-                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-800 flex items-center">
-                            <i data-lucide="database" class="w-5 h-5 mr-2 text-indigo-600"></i> Ticket Explorer (Historical Registry)
-                        </h3>
-                        <p class="text-xs text-gray-500">Search and filter actual support logs. Toggle periods below to compare individual tickets.</p>
-                    </div>
-                    <div class="mt-3 md:mt-0 flex flex-wrap gap-2 items-center">
-                        <!-- Analysis Period Switcher -->
-                        <div class="flex bg-slate-100 p-0.5 rounded-lg border border-slate-200 text-xs">
-                            <button id="btn-period-march" onclick="setPeriod('MARCH')" class="px-2.5 py-1 rounded-md font-medium text-slate-600 hover:text-slate-900 transition-all">
-                                March 2026 (93)
-                            </button>
-                            <button id="btn-period-april" onclick="setPeriod('APRIL_MAY')" class="px-2.5 py-1 rounded-md font-medium bg-white text-indigo-700 shadow-sm transition-all">
-                                April–May 2026 (79)
-                            </button>
+            <div class="distribution-item">
+                <span class="color-key" style="background-color: #3E5AD8;"></span>
+                <div class="item-details">
+                    <div class="item-name highlight-primary">B2B invitation not received</div>
+                    <div class="comparison-visual-container">
+                        <div class="bar-row">
+                            <span class="bar-label" style="color: #3E5AD8;">April–May: 2.5%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 2.5%; background-color: #3E5AD8;"></div></div>
                         </div>
-                        <select id="code-filter" onchange="filterTickets()" class="text-xs border border-gray-300 rounded-md px-2 py-1 bg-white">
-                            <option value="ALL">All Codes</option>
-                            <option value="A">Code A (Premature Expiry)</option>
-                            <option value="B">Code B (Not Received)</option>
-                            <option value="C">Code C (Resends)</option>
-                            <option value="D">Code D (Review Expiry)</option>
-                            <option value="E">Code E (Trial Confusion)</option>
-                            <option value="H">Code H (Mis-tagged)</option>
-                            <option value="I">Code I (Success Logs)</option>
-                        </select>
-                        <input id="search-input" onkeyup="filterTickets()" type="text" placeholder="Search logs..." class="text-xs border border-gray-300 rounded-md px-3 py-1.5 w-40 md:w-52 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                    </div>
-                </div>
-
-                <!-- Interactive Ticket Grid/List -->
-                <div class="bg-gray-50 rounded-lg p-3 max-h-[500px] overflow-y-auto border border-gray-200">
-                    <div id="tickets-container" class="space-y-3">
-                        <!-- Loaded dynamically via JavaScript -->
-                    </div>
-                    <div id="no-results" class="hidden text-center py-8 text-gray-500 text-xs">
-                        No matches found. Adjust filters or search keywords.
+                        <div class="bar-row">
+                            <span class="bar-label">March: 12.9%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 12.9%; background-color: #94A3B8;"></div></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-        </article>
-    </main>
-
-    <!-- Embedded Data Structure and Scripting -->
-    <script>
-        // Track the current selected period in the Explorer
-        let currentPeriod = 'APRIL_MAY';
-
-        // 79 records from April 13 to May 1, 2026
-        const aprilMayTickets = [
-  {
-    "id": "164905",
-    "created_at": "2026-04-13",
-    "title": "Using the SSO account instead of the payee account (payee 013-326 27892257)",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue", "Pain Point"],
-    "message_count": 2,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "Your account associated with the email: Javed.Anwar@monash.edu is not yet linked with the Monash University institutional license. I've just sent you an invitation.",
-    "code": "I"
-  },
-  {
-    "id": "164908",
-    "created_at": "2026-04-13",
-    "title": "Unable to access account",
-    "tags": ["A 1 Level", "Invitation Issue", "Other issue"],
-    "message_count": 4,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "I can see that your .jcu email was invited to the review about two months ago, but the invitation has since expired. You can go ahead and add your .jcu email to accept...",
-    "code": "J"
-  },
-  {
-    "id": "164915",
-    "created_at": "2026-04-13",
-    "title": "New Website Enquiry",
-    "tags": ["A 1 Level", "B2B", "Acct mgmt", "Other issue", "Website inquiry"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": false,
-    "summary": "Your account is linked to the Deakin University institutional license. The free trial label is placed on all new accounts and does not affect your ability to work.",
-    "code": "E"
-  },
-  {
-    "id": "164943",
-    "created_at": "2026-04-13",
-    "title": "RE: [Urgent] Access request to NHS Scotland instance of Covidence",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "I have gone ahead and sent a new invitation to your email. Please click the accept link to finish the connection.",
-    "code": "C"
-  },
-  {
-    "id": "164944",
-    "created_at": "2026-04-13",
-    "title": "Acess Covidence account with institutional email, UT Health",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "I've gone ahead and sent you an invitation link to sync your personal login with the UT Health institutional plan.",
-    "code": "I"
-  },
-  {
-    "id": "164956",
-    "created_at": "2026-04-13",
-    "title": "Can't access institutional license",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue", "Pain Point"],
-    "message_count": 4,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "I can see that an invitation was sent to your Monash email account, but it has since expired as it was sent over 30 days ago. I've sent you a fresh invitation.",
-    "code": "J"
-  },
-  {
-    "id": "164971",
-    "created_at": "2026-04-13",
-    "title": "SSO problem",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue", "Pain Point"],
-    "message_count": 5,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "I can see you were trying to use SSO for the NHS. However, manual invitation setup is required. I have generated and sent a fresh invitation link to your inbox.",
-    "code": "H"
-  },
-  {
-    "id": "165039",
-    "created_at": "2026-04-14",
-    "title": "Problems accessing institutional license",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "I have sent you a fresh invitation to link your account to the University of Leeds subscription.",
-    "code": "I"
-  },
-  {
-    "id": "165074",
-    "created_at": "2026-04-14",
-    "title": "Covidence Institution Access - York University",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "I've successfully processed the link for York University. An invitation email has been sent.",
-    "code": "I"
-  },
-  {
-    "id": "165155",
-    "created_at": "2026-04-15",
-    "title": "Unable to request reviews under Deakin University organizational license",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue", "Pain Point"],
-    "message_count": 6,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "The user was trying to invite reviewers without their accounts being properly configured. We sent manual invitations to the reviewers.",
-    "code": "H"
-  },
-  {
-    "id": "165171",
-    "created_at": "2026-04-15",
-    "title": "Link account to NHS Scotland subscription",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "We have sent you an invitation to connect your login to the NHS Scotland subscription.",
-    "code": "I"
-  },
-  {
-    "id": "165243",
-    "created_at": "2026-04-16",
-    "title": "Institutional license linkage query",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "User successfully invited and linked on the first attempt.",
-    "code": "I"
-  },
-  {
-    "id": "165261",
-    "created_at": "2026-04-16",
-    "title": "Linking account to Monash Health subscription",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 3,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "Sent invitation link for Monash Health. Verification completed.",
-    "code": "I"
-  },
-  {
-    "id": "165293",
-    "created_at": "2026-04-16",
-    "title": "Cannot join institutional subscription",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue", "Pain Point"],
-    "message_count": 4,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "Manual invitation sent by support to override self-sign-up errors.",
-    "code": "G"
-  },
-  {
-    "id": "165300",
-    "created_at": "2026-04-16",
-    "title": "Covidence Institution Access - University of Bath",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "Successfully connected University of Bath membership via automated manual linkage dispatch.",
-    "code": "I"
-  },
-  {
-    "id": "165315",
-    "created_at": "2026-04-16",
-    "title": "Review invitation missing",
-    "tags": ["A 1 Level", "Invitation Issue", "Other issue", "Pain Point"],
-    "message_count": 3,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "Reviewer did not receive the automated invitation. Support manually re-sent the review invitation.",
-    "code": "L"
-  },
-  {
-    "id": "165355",
-    "created_at": "2026-04-17",
-    "title": "Unable to create review under institutional license",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue", "Pain Point"],
-    "message_count": 5,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "User was not linked to the University of Edinburgh plan. Dispatched manual link invite.",
-    "code": "I"
-  },
-  {
-    "id": "165411",
-    "created_at": "2026-04-17",
-    "title": "Need institutional access setup",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "Successfully linked. Initial setup complete.",
-    "code": "I"
-  },
-  {
-    "id": "165450",
-    "created_at": "2026-04-18",
-    "title": "SSO Login Failure - Monash",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "Ticket concerns general SSO authentication errors, not actual invitation malfunctions.",
-    "code": "H"
-  },
-  {
-    "id": "165510",
-    "created_at": "2026-04-19",
-    "title": "Join review error",
-    "tags": ["A 1 Level", "Invitation Issue", "Other issue", "Pain Point"],
-    "message_count": 4,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "A review invitation link expired early due to a legacy cache setting. Successfully bypassed via manual resend.",
-    "code": "D"
-  },
-  {
-    "id": "165560",
-    "created_at": "2026-04-20",
-    "title": "B2B onboarding link expired",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "B2B link expired prematurely. Re-sent linkage invitation.",
-    "code": "A"
-  },
-  {
-    "id": "165574",
-    "created_at": "2026-04-20",
-    "title": "Covidence Institution Access - Deakin",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "User is already fully linked and active under Deakin subscription. Incorrectly tagged as an open invitation issue.",
-    "code": "H"
-  },
-  {
-    "id": "165600",
-    "created_at": "2026-04-20",
-    "title": "Help logging in with institutional access",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue", "Pain Point"],
-    "message_count": 6,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "User had multiple email aliases causing invitation lookup errors. Linked manually.",
-    "code": "H"
-  },
-  {
-    "id": "165655",
-    "created_at": "2026-04-21",
-    "title": "Trial account warning visible",
-    "tags": ["A 1 Level", "B2B", "Other issue"],
-    "message_count": 3,
-    "pain_point": false,
-    "inv_issue": false,
-    "summary": "User confused because 'trial' banner is present on their profile despite being a part of a B2B license.",
-    "code": "E"
-  },
-  {
-    "id": "165711",
-    "created_at": "2026-04-21",
-    "title": "Cannot link to NHS Health subscription",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "First link sent. Acceptance was successful.",
-    "code": "I"
-  },
-  {
-    "id": "165780",
-    "created_at": "2026-04-22",
-    "title": "General login and account settings query",
-    "tags": ["A 1 Level", "Invitation Issue", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "User asked to merge old personal accounts. Ticket incorrectly marked as Invitation Issue.",
-    "code": "H"
-  },
-  {
-    "id": "165804",
-    "created_at": "2026-04-22",
-    "title": "Institutional Linkage requested",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "Dispatched linkage confirmation to the user.",
-    "code": "I"
-  },
-  {
-    "id": "165840",
-    "created_at": "2026-04-22",
-    "title": "Incorrect institutional membership linkage",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue", "Pain Point"],
-    "message_count": 4,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "Standard linkage error. Cleared by manually assigning correct institutional email alias.",
-    "code": "H"
-  },
-  {
-    "id": "165910",
-    "created_at": "2026-04-23",
-    "title": "B2B Member trial account confusion",
-    "tags": ["A 1 Level", "B2B", "Other issue", "Pain Point"],
-    "message_count": 4,
-    "pain_point": true,
-    "inv_issue": false,
-    "summary": "Confusion cleared up regarding institutional seat quota restrictions versus trial limitations.",
-    "code": "E"
-  },
-  {
-    "id": "165992",
-    "created_at": "2026-04-23",
-    "title": "How do I request invitation?",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "User directed to institutional self sign-up page.",
-    "code": "G"
-  },
-  {
-    "id": "166102",
-    "created_at": "2026-04-24",
-    "title": "Invitation issue / SSO",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 3,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "SSO config query tagged incorrectly as invitation workflow failure.",
-    "code": "H"
-  },
-  {
-    "id": "166155",
-    "created_at": "2026-04-24",
-    "title": "Reviewer invitation expired",
-    "tags": ["A 1 Level", "Invitation Issue", "Other issue", "Pain Point"],
-    "message_count": 2,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "Manually resent review invitation after expiration.",
-    "code": "N"
-  },
-  {
-    "id": "166240",
-    "2026-04-25": "2026-04-25",
-    "title": "B2B access setup - Leeds",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "First invitation link sent and successfully accepted.",
-    "code": "I"
-  },
-  {
-    "id": "166291",
-    "created_at": "2026-04-26",
-    "title": "Invitation not arrived for review",
-    "tags": ["A 1 Level", "Invitation Issue", "Other issue", "Pain Point"],
-    "message_count": 3,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "Dispatched fresh reviewer invitation manually.",
-    "code": "C"
-  },
-  {
-    "id": "166304",
-    "created_at": "2026-04-26",
-    "title": "Covidence Access Monash",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "Manual linkage successfully established with institutional quota.",
-    "code": "I"
-  },
-  {
-    "id": "166355",
-    "created_at": "2026-04-27",
-    "title": "B2B onboarding link resend request",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "B2B link resend request processed directly.",
-    "code": "C"
-  },
-  {
-    "id": "166410",
-    "created_at": "2026-04-27",
-    "title": "SSO configuration issue",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 4,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "Query related to general institutional SSO parameters. Incorrectly tagged.",
-    "code": "H"
-  },
-  {
-    "id": "166455",
-    "created_at": "2026-04-28",
-    "title": "Covidence Institution Access - Deakin",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "First invitation link sent and linkage verified.",
-    "code": "I"
-  },
-  {
-    "id": "166501",
-    "created_at": "2026-04-28",
-    "title": "B2B active member trial vs license confusion",
-    "tags": ["A 1 Level", "B2B", "Other issue", "Pain Point"],
-    "message_count": 5,
-    "pain_point": true,
-    "inv_issue": false,
-    "summary": "Resolved confusion regarding personal account view versus corporate subscription plan.",
-    "code": "E"
-  },
-  {
-    "id": "166544",
-    "created_at": "2026-04-29",
-    "title": "B2B link expired",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue", "Pain Point"],
-    "message_count": 2,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "Invitation link expired after standard 30 day lifespan. Fresh invitation issued.",
-    "code": "M"
-  },
-  {
-    "id": "166600",
-    "created_at": "2026-04-29",
-    "title": "Unable to receive link",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue", "Pain Point"],
-    "message_count": 4,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "The user did not receive the standard automated B2B system invite email. Dispatched link manually.",
-    "code": "B"
-  },
-  {
-    "id": "166640",
-    "created_at": "2026-04-30",
-    "title": "Covidence Institution Access - York",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "First invitation link sent. Active seat mapped.",
-    "code": "I"
-  },
-  {
-    "id": "166700",
-    "created_at": "2026-04-30",
-    "title": "Reviewer link resend request",
-    "tags": ["A 1 Level", "Invitation Issue", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "Request to resend a review invitation link. Originating cause undetermined.",
-    "code": "C"
-  },
-  {
-    "id": "166798",
-    "created_at": "2026-04-30",
-    "title": "Issues creating an account/signing in with SSO - fed uni",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "SSO is not currently active for Federation University. Instructed user on manual step overrides. Incorrect tag.",
-    "code": "H"
-  },
-  {
-    "id": "166920",
-    "created_at": "2026-05-01",
-    "title": "help",
-    "tags": ["A 1 Level", "Invitation Issue", "Acct mgmt", "Review issue", "Other issue", "Bot", "Pain Point"],
-    "message_count": 11,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "General, unrelated multi-issue customer ticket regarding generic system errors. Incorrectly tagged as invitation error.",
-    "code": "H"
-  },
-  {
-    "id": "166970",
-    "created_at": "2026-05-01",
-    "title": "RE: You've been invited to Covidence",
-    "tags": ["A 1 Level", "Invitation Issue", "Other issue", "Pain Point"],
-    "message_count": 2,
-    "pain_point": true,
-    "inv_issue": true,
-    "summary": "Review invitation link expired. User was resent the link.",
-    "code": "N"
-  },
-  {
-    "id": "166974",
-    "created_at": "2026-05-01",
-    "title": "B2B linkage creation",
-    "tags": ["A 1 Level", "Invitation Issue", "B2B", "Other issue"],
-    "message_count": 2,
-    "pain_point": false,
-    "inv_issue": true,
-    "summary": "First manual invitation successfully sent. Setup confirmed.",
-    "code": "I"
-  }
-];
-
-        // 93 records matching the statistical parameters of the March 11–30, 2026 period
-        const marchTickets = [
-            // Code A (16 tickets)
-            ...Array.from({length: 16}, (_, i) => ({
-                "id": `1591${100+i}`,
-                "created_at": `2026-03-${11 + (i % 18)}`,
-                "title": "Premature expiration of B2B registration linkage",
-                "tags": ["A 1 Level", "Invitation Issue", "B2B", "Pain Point"],
-                "message_count": 3,
-                "pain_point": true,
-                "inv_issue": true,
-                "summary": "Hi, I just received my organizational sign-up link today, but when clicking, it tells me 'This invitation has already expired.' Please help resubmit.",
-                "code": "A"
-            })),
-            // Code B (12 tickets)
-            ...Array.from({length: 12}, (_, i) => ({
-                "id": `1592${200+i}`,
-                "created_at": `2026-03-${12 + (i % 17)}`,
-                "title": "Did not receive B2B system invite",
-                "tags": ["A 1 Level", "Invitation Issue", "B2B"],
-                "message_count": 2,
-                "pain_point": false,
-                "inv_issue": true,
-                "summary": "My institutional administrator confirmed that my seat was authorized, but I have not received any invitation link in my inbox or spam folders.",
-                "code": "B"
-            })),
-            // Code C (9 tickets)
-            ...Array.from({length: 9}, (_, i) => ({
-                "id": `1593${300+i}`,
-                "created_at": `2026-03-${13 + (i % 15)}`,
-                "title": "Resend request for onboarding linkage",
-                "tags": ["A 1 Level", "Invitation Issue", "B2B"],
-                "message_count": 2,
-                "pain_point": false,
-                "inv_issue": true,
-                "summary": "Can you please resend the institutional invitation email? The previous link appears inaccessible.",
-                "code": "C"
-            })),
-            // Code D (5 tickets)
-            ...Array.from({length: 5}, (_, i) => ({
-                "id": `1594${400+i}`,
-                "created_at": `2026-03-${14 + (i % 12)}`,
-                "title": "Review collaboration link expired prematurely",
-                "tags": ["A 1 Level", "Invitation Issue", "Pain Point"],
-                "message_count": 4,
-                "pain_point": true,
-                "inv_issue": true,
-                "summary": "My co-author sent me an invitation to join their review yesterday, but the system is already reporting the link as expired. Please renew.",
-                "code": "D"
-            })),
-            // Code E (19 tickets)
-            ...Array.from({length: 19}, (_, i) => ({
-                "id": `1595${500+i}`,
-                "created_at": `2026-03-${11 + (i % 19)}`,
-                "title": "Free trial banner active on institutional seat",
-                "tags": ["A 1 Level", "B2B", "Account Confusion", "Pain Point"],
-                "message_count": 4,
-                "pain_point": true,
-                "inv_issue": false,
-                "summary": "I joined my university's organization portal, but my screen still says 'Free Trial Account - 50 references remaining.' I cannot start my institutional project.",
-                "code": "E"
-            })),
-            // Code H / Incorrectly tagged (23 tickets)
-            ...Array.from({length: 23}, (_, i) => ({
-                "id": `1596${600+i}`,
-                "created_at": `2026-03-${12 + (i % 18)}`,
-                "title": "Miscellaneous issue tagged as Invitation",
-                "tags": ["A 1 Level", "Invitation Issue", "Other issue"],
-                "message_count": 2,
-                "pain_point": false,
-                "inv_issue": true,
-                "summary": "User requested assistance with basic full-text screen parsing. Marked as Invitation Issue despite containing no invitation workflows.",
-                "code": "H"
-            })),
-            // Code I (9 tickets)
-            ...Array.from({length: 9}, (_, i) => ({
-                "id": `1597${700+i}`,
-                "created_at": `2026-03-${13 + (i % 14)}`,
-                "title": "Onboarding linkages successfully created",
-                "tags": ["A 1 Level", "Invitation Issue", "B2B"],
-                "message_count": 2,
-                "pain_point": false,
-                "inv_issue": true,
-                "summary": "Dispatched B2B system invite successfully. Linkage completed immediately upon initial click.",
-                "code": "I"
-            }))
-        ];
-
-        // Period Switcher Handler
-        function setPeriod(period) {
-            currentPeriod = period;
-            
-            const btnMarch = document.getElementById('btn-period-march');
-            const btnApril = document.getElementById('btn-period-april');
-            
-            if (period === 'MARCH') {
-                btnMarch.className = "px-2.5 py-1 rounded-md font-medium bg-white text-indigo-700 shadow-sm transition-all";
-                btnApril.className = "px-2.5 py-1 rounded-md font-medium text-slate-600 hover:text-slate-900 transition-all";
-            } else {
-                btnApril.className = "px-2.5 py-1 rounded-md font-medium bg-white text-indigo-700 shadow-sm transition-all";
-                btnMarch.className = "px-2.5 py-1 rounded-md font-medium text-slate-600 hover:text-slate-900 transition-all";
-            }
-            
-            filterTickets();
-        }
-
-        // Function to dynamically load and filter tickets
-        function filterTickets() {
-            const codeFilter = document.getElementById('code-filter').value;
-            const searchQuery = document.getElementById('search-input').value.toLowerCase();
-            const container = document.getElementById('tickets-container');
-            const noResults = document.getElementById('no-results');
-            
-            container.innerHTML = '';
-            let visibleCount = 0;
-
-            const activeDataset = (currentPeriod === 'MARCH') ? marchTickets : aprilMayTickets;
-
-            activeDataset.forEach(ticket => {
-                const matchesCode = (codeFilter === 'ALL' || ticket.code === codeFilter);
-                const matchesSearch = (
-                    ticket.id.includes(searchQuery) ||
-                    ticket.title.toLowerCase().includes(searchQuery) ||
-                    ticket.summary.toLowerCase().includes(searchQuery) ||
-                    ticket.tags.some(t => t.toLowerCase().includes(searchQuery))
-                );
-
-                if (matchesCode && matchesSearch) {
-                    visibleCount++;
-                    
-                    // Create card element
-                    const card = document.createElement('div');
-                    card.className = "bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition duration-150";
-                    
-                    // Format Tags HTML
-                    const tagsHTML = ticket.tags.map(t => 
-                        `<span class="inline-block bg-slate-100 text-slate-600 text-[10px] font-medium px-2 py-0.5 rounded mr-1">${t}</span>`
-                    ).join('');
-
-                    card.innerHTML = `
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-700 mr-2">
-                                    Code ${ticket.code}
-                                </span>
-                                <span class="text-xs text-gray-400 font-mono">#${ticket.id}</span>
-                                <h4 class="text-sm font-semibold text-gray-900 mt-1">${ticket.title}</h4>
-                            </div>
-                            <span class="text-xs text-gray-500 font-medium">${ticket.created_at}</span>
+            <div class="distribution-item">
+                <span class="color-key" style="background-color: #EEF5FF;"></span>
+                <div class="item-details">
+                    <div class="item-name">Request B2B link resend, cannot be determined if link expired / not received</div>
+                    <div class="comparison-visual-container">
+                        <div class="bar-row">
+                            <span class="bar-label" style="color: #002358;">April–May: 8.9%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 8.9%; background-color: #EEF5FF; border: 1px solid rgba(0,35,88,0.25);"></div></div>
                         </div>
-                        <p class="text-xs text-gray-600 mt-2 italic leading-relaxed bg-slate-50 p-2.5 rounded border border-slate-100">
-                            "${ticket.summary}"
-                        </p>
-                        <div class="mt-3 flex items-center justify-between">
-                            <div class="flex flex-wrap">${tagsHTML}</div>
-                            <div class="flex items-center space-x-2 text-xs">
-                                ${ticket.pain_point ? '<span class="text-rose-600 font-semibold flex items-center"><i data-lucide="frown" class="w-3.5 h-3.5 mr-0.5"></i>Pain Point</span>' : ''}
-                                <span class="text-gray-400 flex items-center"><i data-lucide="message-square" class="w-3 h-3 mr-1"></i>${ticket.message_count} msgs</span>
-                            </div>
+                        <div class="bar-row">
+                            <span class="bar-label">March: 9.7%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 9.7%; background-color: #94A3B8;"></div></div>
                         </div>
-                    `;
-                    container.appendChild(card);
-                }
-            });
+                    </div>
+                </div>
+            </div>
 
-            // Handle no results UI
-            if (visibleCount === 0) {
-                noResults.classList.remove('hidden');
-            } else {
-                noResults.classList.add('hidden');
-            }
+            <div class="distribution-item">
+                <span class="color-key" style="background-color: #0E8570;"></span>
+                <div class="item-details">
+                    <div class="item-name highlight-primary">Review invitation link expired prematurely</div>
+                    <div class="comparison-visual-container">
+                        <div class="bar-row">
+                            <span class="bar-label" style="color: #002358;">April–May: 1.3%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 1.3%; background-color: #0E8570;"></div></div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">March: 5.4%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 5.4%; background-color: #94A3B8;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="distribution-item">
+                <span class="color-key" style="background-color: #D04457;"></span>
+                <div class="item-details">
+                    <div class="item-name">B2B active member confusion: creating reviews under personal free trial vs B2B license</div>
+                    <div class="comparison-visual-container">
+                        <div class="bar-row">
+                            <span class="bar-label" style="color: #002358;">April–May: 5.1%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 5.1%; background-color: #D04457;"></div></div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">March: 20.4%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 20.4%; background-color: #94A3B8;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="distribution-item">
+                <span class="color-key" style="background-color: #402DB3;"></span>
+                <div class="item-details">
+                    <div class="item-name">Incorrectly tagged with invitation issue</div>
+                    <div class="comparison-visual-container">
+                        <div class="bar-row">
+                            <span class="bar-label" style="color: #002358;">April–May: 30.4%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 30.4%; background-color: #402DB3;"></div></div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">March: 24.7%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 24.7%; background-color: #94A3B8;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="distribution-item">
+                <span class="color-key" style="background-color: #A7007E;"></span>
+                <div class="item-details">
+                    <div class="item-name">Successful sign ups</div>
+                    <div class="comparison-visual-container">
+                        <div class="bar-row">
+                            <span class="bar-label" style="color: #002358;">April–May: 27.8%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 27.8%; background-color: #A7007E;"></div></div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">March: 9.7%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 9.7%; background-color: #94A3B8;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="distribution-item">
+                <span class="color-key" style="background-color: #6A1B82;"></span>
+                <div class="item-details">
+                    <div class="item-name">Other</div>
+                    <div class="comparison-visual-container">
+                        <div class="bar-row">
+                            <span class="bar-label" style="color: #002358;">April–May: 22.8%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 22.8%; background-color: #6A1B82;"></div></div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">March: 34.4%</span>
+                            <div class="bar-track"><div class="bar-fill" style="width: 34.4%; background-color: #94A3B8;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CARD 2: PRE AND POST FIX COMPARISON -->
+    <div class="report-card">
+        <h2>Pre and post fix comparison</h2>
+        <p class="section-desc" style="color: var(--text-muted);">
+            <span class="highlight-accent">B2B invitation link expiring prematurely</span> and <span class="highlight-accent">B2B invitation not received</span> show a statistically significant drop. <span class="highlight-accent">Review invitation link expiring prematurely</span> is statistically low but this is only because of the limited number to compare it with the previous period, as both periods are limited in volume.
+        </p>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Comparison case</th>
+                        <th class="text-right nowrap" style="width: 110px;">Pre-fix %</th>
+                        <th class="text-right nowrap" style="width: 110px;">Post-fix %</th>
+                        <th class="text-right nowrap" style="width: 110px;">p-value</th>
+                        <th style="width: 220px;">Significant?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="highlight-primary">B2B invitation link expired prematurely (code A)</td>
+                        <td class="text-right nowrap">17.2%</td>
+                        <td class="text-right nowrap">1.3%</td>
+                        <td class="text-right nowrap">0.00046</td>
+                        <td><span class="badge badge-highly">Highly significant (drop)</span></td>
+                    </tr>
+                    <tr>
+                        <td class="highlight-primary">B2B invitation not received (code B)</td>
+                        <td class="text-right nowrap">12.9%</td>
+                        <td class="text-right nowrap">2.5%</td>
+                        <td class="text-right nowrap">0.02211</td>
+                        <td><span class="badge badge-significant">Significant (drop)</span></td>
+                    </tr>
+                    <tr>
+                        <td class="highlight-primary">Review invitation link expired prematurely (code D)</td>
+                        <td class="text-right nowrap">5.4%</td>
+                        <td class="text-right nowrap">1.3%</td>
+                        <td class="text-right nowrap">0.21994</td>
+                        <td><span class="badge badge-not">Not significant (low N)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Footnote section linking to both raw data sources -->
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 16px; padding-top: 8px; border-top: 1px dashed var(--border-color); line-height: 1.4;">
+            Raw data: <a href="https://tenbergrota.github.io/AdHocReports/" target="_blank" class="meta-link" style="font-size: 0.8rem;">11-30 March 2026</a> and <a href="https://docs.google.com/spreadsheets/d/1vmZDOL92ACdxApyR9_yFy9YI5rIOByTX9olB2x_wrjk/edit?gid=0#gid=0" target="_blank" class="meta-link" style="font-size: 0.8rem;">13 April to 1 May 2026</a>
+        </div>
+    </div>
+
+    <!-- CARD 3: OTHER INSIGHTS -->
+    <div class="report-card">
+        <h2>Other insights</h2>
+        <div class="insights-grid">
             
-            // Re-render lucide icons for newly added HTML
-            lucide.createIcons();
-        }
+            <div class="insight-subcard">
+                <div class="insight-header">
+                    <div class="insight-num">1</div>
+                    <div class="insight-title">Pain point tag</div>
+                </div>
+                <div class="insight-body">
+                    The rate of successfully applying the Pain Point tag to valid user friction tickets has slowly decreased from 50.5% in March to 44.3% in late April–May. 
+                </div>
+            </div>
 
-        // Run on initial load
-        window.onload = function() {
-            setPeriod('APRIL_MAY');
-        }
-    </script>
+            <div class="insight-subcard">
+                <div class="insight-header">
+                    <div class="insight-num">2</div>
+                    <div class="insight-title">Invitation issue tag</div>
+                </div>
+                <div class="insight-body">
+                    Approximately 30% of the overall analyzed ticket queue (30.4%, or 24 out of 79 tickets) consisted of records incorrectly tagged with Invitation Issue. 
+                </div>
+            </div>
+
+            <div class="insight-subcard">
+                <div class="insight-header">
+                    <div class="insight-num">3</div>
+                    <div class="insight-title">Operational parameters</div>
+                </div>
+                <div class="insight-body">
+                    38.0% of the tickets are standard operational non-issues. These represent normal workflows where B2B links expire expectedly after 1 month or users successfully complete their onboarding flows.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="report-footer">
+        End of report
+    </div>
+
+</div>
+
 </body>
 </html>
